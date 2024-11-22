@@ -45,13 +45,14 @@ export const createBudget = ({ name, amount }) => {
 };
 
 // create expense
-export const createExpense = ({ name, amount, budgetId }) => {
+export const createExpense = ({ name, amount, budgetId, category }) => {
   const newItem = {
     id: crypto.randomUUID(),
     name: name,
     createdAt: Date.now(),
     amount: +amount,
     budgetId: budgetId,
+    category: category, // Add category here
   };
   const existingExpenses = fetchData("expenses") ?? [];
   return localStorage.setItem(
@@ -59,7 +60,6 @@ export const createExpense = ({ name, amount, budgetId }) => {
     JSON.stringify([...existingExpenses, newItem])
   );
 };
-
 // total spent by budget
 export const calculateSpentByBudget = (budgetId) => {
   const expenses = fetchData("expenses") ?? [];
@@ -91,4 +91,21 @@ export const formatCurrency = (amt) => {
     style: "currency",
     currency: "INR",
   });
+};
+
+// create budget
+export const createBudgets = ({ name, amount, category }) => {
+  const newItem = {
+    id: crypto.randomUUID(),
+    name: name,
+    createdAt: Date.now(),
+    amount: +amount,
+    category: category, // Add category
+    color: generateRandomColor(),
+  };
+  const existingBudgets = fetchData("budgets") ?? [];
+  return localStorage.setItem(
+    "budgets",
+    JSON.stringify([...existingBudgets, newItem])
+  );
 };

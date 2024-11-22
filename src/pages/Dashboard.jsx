@@ -3,6 +3,7 @@ import { Link, useLoaderData } from "react-router-dom";
 
 // library imports
 import { toast } from "react-toastify";
+import PieChart from "../components/PieChart";
 
 // components
 import Intro from "../components/Intro";
@@ -50,19 +51,20 @@ export async function dashboardAction({ request }) {
       createBudget({
         name: values.newBudget,
         amount: values.newBudgetAmount,
+        category: values.newBudgetCategory, // Pass the category
       });
       return toast.success("Budget created!");
     } catch (e) {
       throw new Error("There was a problem creating your budget.");
     }
   }
-
   if (_action === "createExpense") {
     try {
       createExpense({
         name: values.newExpense,
         amount: values.newExpenseAmount,
         budgetId: values.newExpenseBudget,
+        category: values.newExpenseCategory, 
       });
       return toast.success(`Expense ${values.newExpense} created!`);
     } catch (e) {
@@ -85,7 +87,7 @@ export async function dashboardAction({ request }) {
 
 const Dashboard = () => {
   const { userName, budgets, expenses } = useLoaderData();
-
+  console.log("Expenses Data:", expenses);
   return (
     <>
       {userName ? (
@@ -103,7 +105,7 @@ const Dashboard = () => {
                 <h2>Existing Budgets</h2>
                 <div className="budgets">
                   {budgets.map((budget) => (
-                    <BudgetItem key={budget.id} budget={budget} />
+                    <BudgetItem key={budget.id} budget={budget} showDelete={true} />
                   ))}
                 </div>
                 {expenses && expenses.length > 0 && (
@@ -119,6 +121,8 @@ const Dashboard = () => {
                         View all expenses
                       </Link>
                     )}
+                    {/* Add the PieChart component here */}
+                    <PieChart expenses={expenses} />
                   </div>
                 )}
               </div>

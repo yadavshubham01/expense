@@ -9,28 +9,22 @@ import { CurrencyDollarIcon } from "@heroicons/react/24/solid"
 
 const AddBudgetForm = () => {
   const fetcher = useFetcher();
-  const isSubmitting = fetcher.state === "submitting"
+  const isSubmitting = fetcher.state === "submitting";
 
   const formRef = useRef();
   const focusRef = useRef();
 
   useEffect(() => {
     if (!isSubmitting) {
-      formRef.current.reset()
-      focusRef.current.focus()
+      formRef.current.reset();
+      focusRef.current.focus();
     }
-  }, [isSubmitting])
+  }, [isSubmitting]);
 
   return (
     <div className="form-wrapper">
-      <h2 className="h3">
-        Create budget
-      </h2>
-      <fetcher.Form
-        method="post"
-        className="grid-sm"
-        ref={formRef}
-      >
+      <h2 className="h3">Create budget</h2>
+      <fetcher.Form method="post" className="grid-sm" ref={formRef}>
         <div className="grid-xs">
           <label htmlFor="newBudget">Budget Name</label>
           <input
@@ -54,19 +48,29 @@ const AddBudgetForm = () => {
             inputMode="decimal"
           />
         </div>
+        <div className="grid-xs">
+          <label htmlFor="newBudgetCategory">Category</label>
+          <input
+           type="text"
+           name="newExpenseCategory"
+           id="newExpenseCategory"
+           placeholder="e.g., Food"
+           required
+         />
+          <select name="newBudgetCategory" id="newBudgetCategory" required>
+            <option value="">Select a category</option>
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Entertainment">Entertainment</option>
+            {/* Add more categories as needed */}
+          </select>
+        </div>
         <input type="hidden" name="_action" value="createBudget" />
         <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
-          {
-            isSubmitting ? <span>Submitting…</span> : (
-              <>
-                <span>Create budget</span>
-                <CurrencyDollarIcon width={20} />
-              </>
-            )
-          }
+          {isSubmitting ? <span>Submitting…</span> : <span>Create budget</span>}
         </button>
       </fetcher.Form>
     </div>
-  )
-}
+  );
+};
 export default AddBudgetForm

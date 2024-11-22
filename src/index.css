@@ -324,6 +324,19 @@ nav a {
   font-weight: bold;
 }
 
+.pie-chart-container {
+  width: 100%; /* Full width of the parent */
+  max-width: 400px; /* Set a maximum width */
+  margin: 0 auto; /* Center the chart */
+  text-align: center; /* Center the text */
+}
+
+.pie-chart {
+  position: relative;
+  width: 100%; /* Full width of the container */
+  height: 300px; /* Set a fixed height */
+}
+
 @media screen and (max-width: 525px) {
   nav a span {
     display: none;

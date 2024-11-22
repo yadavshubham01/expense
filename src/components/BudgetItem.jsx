@@ -12,7 +12,7 @@ import {
 } from "../helpers";
 
 const BudgetItem = ({ budget, showDelete = false }) => {
-  const { id, name, amount, color } = budget;
+  const { id, name, amount, color, category } = budget; // Include category
   const spent = calculateSpentByBudget(id);
 
   return (
@@ -23,7 +23,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
       }}
     >
       <div className="progress-text">
-        <h3>{name}</h3>
+        <h3>{name} ({category})</h3> {/* Display category */}
         <p>{formatCurrency(amount)} Budgeted</p>
       </div>
       <progress max={amount} value={spent}>
@@ -65,4 +65,5 @@ const BudgetItem = ({ budget, showDelete = false }) => {
     </div>
   );
 };
+
 export default BudgetItem;
